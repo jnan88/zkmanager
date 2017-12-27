@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+<!-- <Configuration status="off" monitorInterval="1800"> -->
+	<properties>
+		<property name="log_home">logs</property>
+		<property name="log_pattern">%d [%t] %-5p %C:%M:%L - %m%n</property>
+		<property name="info_log_file_name">info</property>
+		<property name="error_log_file_name">error</property>
+		<property name="self_log_file_name">self</property>
+	</properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${log_pattern}" />
+		</Console>
+		<RollingRandomAccessFile name="info-log"
+			fileName="${log_home}/${info_log_file_name}.log" filePattern="${log_home}/${info_log_file_name}.log.%d{yyyy-MM-dd}">
+			<PatternLayout pattern="${log_pattern}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+			</Policies>
+			<Filters>
+				<ThresholdFilter level="warn" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+				<ThresholdFilter level="debug" onMatch="ACCEPT"
+					onMismatch="DENY" />
+			</Filters>
+		</RollingRandomAccessFile>
+		<RollingRandomAccessFile name="error-log"
+			fileName="${log_home}/${error_log_file_name}.log" filePattern="${log_home}/${error_log_file_name}.log.%d{yyyy-MM-dd}">
+			<PatternLayout pattern="${log_pattern}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+			</Policies>
+			<Filters>
+				<ThresholdFilter level="fatal" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+				<ThresholdFilter level="warn" onMatch="ACCEPT"
+					onMismatch="DENY" />
+			</Filters>
+		</RollingRandomAccessFile>
+		<RollingRandomAccessFile name="self-log"
+			fileName="${log_home}/${self_log_file_name}.log" filePattern="${log_home}/${self_log_file_name}.log.%d{yyyy-MM-dd}">
+			<PatternLayout pattern="${log_pattern}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+			</Policies>
+		</RollingRandomAccessFile>
+	</Appenders>
+
+	<Loggers>
+		<logger name="com.onttp.zkmanager" level="WARN">
+			<appender-ref ref="error-log" />
+		</logger>
+		<logger name="selflog" level="DEBUG">
+			<appender-ref ref="self-log" />
+		</logger>
+		<root level="INFO" includeLocation="true">
+			<appender-ref ref="info-log" />
+			<appender-ref ref="Console" />
+		</root>
+	</Loggers>
+</Configuration>

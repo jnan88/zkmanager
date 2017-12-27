@@ -1,0 +1,101 @@
+<!doctype html>
+<html class="no-js">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZK数据浏览</title>
+
+<!-- Set render engine for 360 browser -->
+<meta name="renderer" content="webkit">
+
+<!-- No Baidu Siteapp-->
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<link rel="icon" type="image/png" href="assets/i/favicon.png">
+
+<!-- Add to homescreen for Chrome on Android -->
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="icon" sizes="192x192" href="assets/i/app-icon72x72@2x.png">
+
+<!-- Add to homescreen for Safari on iOS -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Amaze UI" />
+<link rel="apple-touch-icon-precomposed"
+	href="assets/i/app-icon72x72@2x.png">
+
+<!-- Tile icon for Win8 (144x144 + tile color) -->
+<meta name="msapplication-TileImage"
+	content="assets/i/app-icon72x72@2x.png">
+<meta name="msapplication-TileColor" content="#0e90d2">
+
+<link rel="stylesheet" href="assets/css/amazeui.min.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<style>
+.main {
+	margin-top: 10px;
+	margin-bottom: 40px;
+}
+
+.footer p {
+	color: #7f8c8d;
+	margin: 0;
+	padding: 15px 0;
+	text-align: center;
+	background: #2d3e50;
+}
+</style>
+</head>
+<body>
+	<header class="am-topbar am-topbar-fixed-top">
+		<div class="am-container">
+			<h1 class="am-topbar-brand">
+				<a href="#">ZK数据浏览</a>
+			</h1>
+		</div>
+	</header>
+	<div class="am-container main">
+		<div class="am-g">
+			<form class="am-form" action="./zk/server" method="get">
+					<div class="am-form-group">
+					<label>Zk Server</label>
+						<input type="text" name="zkserver" placeholder="127.0.0.1:2181" value="${zkserver}" />
+					</div>
+					<p>
+						<button type="submit" class="am-btn am-btn-default">更新Server</button>
+					</p>
+			</form>
+			<table
+				class="am-table am-table-bordered am-table-striped am-table-compact">
+				<tr>
+					<td>Node</td>
+					<td>Value</td>
+				</tr>
+				#for( user: nodeList)
+				<tr>
+					#if(user.hasChildren)
+					<td><a href="zk?path=${user.path}">${user.path}</a></td> #else
+					<td>${user.path}</td> #end
+					<td>${user.data}</td>
+				</tr>
+				#end
+			</table>
+			<button type="button" id="btn-back" onclick="javascript:history.go(-1);" class="am-btn am-btn-sm am-btn-default">返回</button>
+		</div>
+	</div>
+	#include("common/footer.jetx")
+</body>
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="assets/js/jquery.min.js"></script>
+<!--<![endif]-->
+<!--[if lte IE 8 ]>
+<script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+<script src="assets/js/amazeui.min.js"></script>
+</body>
+</html>
