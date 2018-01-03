@@ -29,7 +29,7 @@ public class TemplateConfig implements BeanProcessor {
 	@Override
 	public void processor(Blade blade) {
 		// Base.open("jdbc:mysql://127.0.0.1:3306/app", "root", "123456");
-		ZkUtil.setZkClient(new ZkClient().create("127.0.0.1:2181"));
+//		ZkUtil.setZkClient(new ZkClient().create("127.0.0.1:2181"));
 		// 项目启动的时候加载一些 配置
 		// blade.templateEngine(templateEngine);
 

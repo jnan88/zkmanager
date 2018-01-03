@@ -30,8 +30,8 @@ public class ZkController {
 	public String zk(Request request, Response response) {
 		Optional<String> pathReq = request.query("path");
 		try {
-			request.attribute("zkserver", ZkUtil.getZkClient().getConnectionInfo());
-			request.attribute("nodeList", ZkUtil.getZkClient().getNodeList(pathReq.orElse("/")));
+			request.attribute("zkserver", ZkUtil.getConnectionInfo());
+			request.attribute("nodeList", ZkUtil.getNodes(pathReq.orElse("/")));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -43,8 +43,8 @@ public class ZkController {
 		Optional<String> pathReq = request.query("zkserver");
 		String connectionInfo = pathReq.orElse("");
 		if (!"".equals(connectionInfo)) {
-			ZkUtil.getZkClient().close();
-			ZkUtil.getZkClient().create(connectionInfo);
+			ZkUtil.close();
+			ZkUtil.create(connectionInfo);
 		}
 		response.redirect("/zk");
 	}
@@ -53,7 +53,7 @@ public class ZkController {
 	@JSON
 	public LayuiPage api(Request request, Response response) throws Exception {
 		Optional<String> pathReq = request.query("path");
-		List<ZkNode> paths = ZkUtil.getZkClient().getNodeList(pathReq.orElse("/"));
+		List<ZkNode> paths = ZkUtil.getNodes(pathReq.orElse("/"));
 		return new LayuiPage(paths, paths.size());
 	}
 
