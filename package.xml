@@ -10,11 +10,14 @@
 	</formats>
 
 	<includeBaseDirectory>false</includeBaseDirectory>
-
 	<fileSets>
 		<fileSet>
 			<directory>src/main/resources/</directory>
 			<outputDirectory>/resources</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>script/</directory>
+			<outputDirectory>/</outputDirectory>
 		</fileSet>
 	</fileSets>
 
